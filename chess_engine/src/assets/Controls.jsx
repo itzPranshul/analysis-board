@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Controls({ currentIndex, historyLength, setCurrentIndex, onAnalyze }) {
+function Controls({ currentIndex, historyLength, setCurrentIndex, onAnalyze, onReset }) {
   return (
     <div style={{ marginTop: 10 }}>
       <button
@@ -17,17 +17,13 @@ function Controls({ currentIndex, historyLength, setCurrentIndex, onAnalyze }) {
       >
         Forward →
       </button>
-      <button onClick={onAnalyze}>
-        Analyze Position
-      </button>
-      <button onClick={ () => setCurrentIndex( i=> 0)}
-              disabled = {currentIndex === 0}
-              style={{ marginLeft: 10 }}
-      >
-        reset 
+      <button onClick={onAnalyze}>Analyze Position</button>
+      <button onClick={onReset} style={{ marginLeft: 10 }}>
+        Reset
       </button>
     </div>
   );
 }
+
 
 export default Controls;

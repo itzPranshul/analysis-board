@@ -4,6 +4,8 @@ import ChessBoardComponent from './assets/ChessBoardComponent';
 import Controls from './assets/Controls';
 import BestMoveDisplay from './assets/BestMoveDisplay';
 import MoveHistory from './assets/MoveHistory';
+import EvaluationDisplay from './assets/EvaluationDisplay';
+
 
 function App() {
   const [game, setGame] = useState(new Chess());
@@ -40,25 +42,46 @@ function App() {
     return fullPGN.replace(/\[.*?\]\s*\n/g, '').trim();// for removing all other headers
   };
 
+  const handleReset = () => {
+    const initialFen = new Chess().fen();
+    setFenHistory([initialFen]);  // Reset history to just the initial position
+    setCurrentIndex(0);           // Move to the start
+    setGame(new Chess());         // Reset the game instance
+  };
+  
+
 
   return (
-    <div style={{ padding: 20 }}>
-      <ChessBoardComponent
-        position={fenHistory[currentIndex]}
-        onDrop={makeAMove}
-      />
+    <div style={{ display: 'flex', padding: 20 }}>
+      {/* Left side: Chessboard */}
+      <div style={{ flex: 1, marginRight: 20 }}>
+        <ChessBoardComponent
+          position={fenHistory[currentIndex]}
+          onDrop={makeAMove}
+        />
+      </div>
+  
+      {/* Right side: Controls and displays */}
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '20px' }}>
+        
+  
+        <EvaluationDisplay fen={fenHistory[currentIndex]} />
+  
+        <BestMoveDisplay bestMove={bestMove} />
+  
+        <MoveHistory pgn={getPGN()} />
+        <Controls
+  currentIndex={currentIndex}
+  historyLength={fenHistory.length}
+  setCurrentIndex={setCurrentIndex}
+  onAnalyze={analyze}
+  onReset={handleReset}
+/>
 
-      <Controls
-        currentIndex={currentIndex}
-        historyLength={fenHistory.length}
-        setCurrentIndex={setCurrentIndex}
-        onAnalyze={analyze}
-      />
-
-      <BestMoveDisplay bestMove={bestMove} />
-      <MoveHistory pgn={getPGN()} />
+      </div>
     </div>
   );
+  
 }
 
 export default App;
