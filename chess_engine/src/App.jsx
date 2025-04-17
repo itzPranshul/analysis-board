@@ -32,10 +32,11 @@ function App() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ fen: fenHistory[currentIndex] }),
     });
-
+  
     const data = await res.json();
-    setBestMove(data.best_move);
+    setBestMove(data.best_line); // changed from best_move to best_line
   };
+  
 
   const getPGN = () => { 
     const fullPGN = game.pgn()

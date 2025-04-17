@@ -11,31 +11,32 @@ app.use(bodyParser.json());
 
 app.post('/analyze', (req, res) => {
   const fen = req.body.fen;
+  const stockfish = spawn('/Users/pranshul/Desktop/projects/stockfish/Stockfish/src/stockfish');
 
-  const stockfish = spawn('/Users/pranshul/Desktop/projects/stockfish/Stockfish/src/stockfish'); // change path if needed
-
-  let bestMove = '';
+  let bestLine = '';
 
   stockfish.stdin.write('uci\n');
   stockfish.stdin.write('isready\n');
   stockfish.stdin.write(`position fen ${fen}\n`);
-  stockfish.stdin.write('go depth 30\n');
+  stockfish.stdin.write('go depth 15\n');
 
   stockfish.stdout.on('data', (data) => {
     const output = data.toString();
+    console.log(output); // for debugging: see what's coming back
 
+    // Match the principal variation line with the best sequence
+    const pvMatch = output.match(/info .+ pv (.+)/);
+    if (pvMatch) {
+      bestLine = pvMatch[1];
+    }
+
+    // When bestmove is received, respond with the best sequence found
     if (output.includes('bestmove')) {
-      const match = output.match(/bestmove (\w+)/);
-      if (match) {
-        bestMove = match[1];
-        res.json({ best_move: bestMove });
-        stockfish.kill();
-      }
-  };
+      res.json({ best_line: bestLine });
+      stockfish.kill();
+    }
   });
-
 });
-
 
 
 app.post('/evaluate', (req, res) => {
@@ -47,7 +48,7 @@ app.post('/evaluate', (req, res) => {
   stockfish.stdin.write('uci\n');
   stockfish.stdin.write('isready\n');
   stockfish.stdin.write(`position fen ${fen}\n`);
-  stockfish.stdin.write('go depth 30\n');
+  stockfish.stdin.write('go depth 15\n');
 
   stockfish.stdout.on('data', (data) => {
     const output = data.toString();
