@@ -78,11 +78,9 @@ function App() {
   onAnalyze={analyze}
   onReset={handleReset}
 />
-
       </div>
     </div>
   );
-  
 }
 
 export default App;
