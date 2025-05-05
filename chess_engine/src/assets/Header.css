@@ -1,0 +1,33 @@
+/* Header container */
+.header {
+    background-color: #1a202c; /* dark gray */
+    color: white;
+    padding: 1rem 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Title inside the header */
+  .header-title {
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  /* Responsive: Adjust title size on smaller screens */
+  @media (max-width: 768px) {
+    .header-title {
+      font-size: 1.25rem; /* Smaller font size for mobile devices */
+    }
+  }
+  
+  /* Responsive: Adjust padding for smaller screens */
+  @media (max-width: 480px) {
+    .header {
+      padding: 0.5rem 0; /* Reduce padding on small devices */
+    }
+  
+    .header-title {
+      font-size: 1.1rem; /* Further decrease font size on very small screens */
+    }
+  }
+  
