@@ -1,0 +1,17 @@
+.page-container {
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .image-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .centered-image {
+    width: 60vw; /* 60% of the viewport width */
+    height: auto;
+    border-radius: 12px; /* Optional: for rounded corners */
+  }
+  
