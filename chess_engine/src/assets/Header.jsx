@@ -3,7 +3,7 @@ import './Header.css'; // Import the CSS file
 
 const Header = () => {
   return (
-    <header className="header">
+    <header className="header mt-20">
       <h1 className="header-title">Chess Analysis Board</h1>
     </header>
   );

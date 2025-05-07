@@ -5,7 +5,6 @@ import Controls from '../assets/Controls';
 import BestMoveDisplay from '../assets/BestMoveDisplay';
 import MoveHistory from '../assets/MoveHistory';
 import EvaluationDisplay from '../assets/EvaluationDisplay';
-import Header from '../assets/Header';
 import './ChessBoardPage.css'; // optional CSS specific to this page
 
 function ChessBoardPage() {
@@ -51,7 +50,6 @@ function ChessBoardPage() {
   return (
     <div className="app-container">
       <div className="chessboard-container">
-        <Header/>
         <ChessBoardComponent
           position={fenHistory[currentIndex]}
           onDrop={makeAMove}

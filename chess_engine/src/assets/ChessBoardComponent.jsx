@@ -1,5 +1,6 @@
 import React from 'react';
 import { Chessboard } from 'react-chessboard';
+import Header from './Header';
 
 function ChessBoardComponent({ position, onDrop }) {
   const handleDrop = (sourceSquare, targetSquare) => {
@@ -12,11 +13,15 @@ function ChessBoardComponent({ position, onDrop }) {
   };
 
   return (
+    <>
+    <Header/>
     <Chessboard
       position={position}
       onPieceDrop={handleDrop}
       boardWidth={700}
-    />
+      />
+
+    </>
   );
 }
 
