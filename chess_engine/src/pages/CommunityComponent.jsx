@@ -6,7 +6,7 @@ import ProfileCard from '../assets/ProfileCard';
 
 function CommunityComponent() {
   return (
-    <div className="page-container">
+    <div className="page-container mt-25">
       <h1>Community</h1>
       <p>Join discussions, events, and connect with other chess enthusiasts.</p>
       <ProfileCard/>
