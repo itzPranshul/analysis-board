@@ -41,7 +41,7 @@ const ProfileCard = () => {
             alt={user.name}
             className="w-30 h-30 rounded-full object-cover mb-3"
           />
-          <h2 className="text-xl font-semibold">{user.name}</h2>
+          <h2 className="text-xl text-gray-600 font-semibold">{user.name}</h2>
           <p className="text-gray-600">UID: {user.chessUID}</p>
         </div>
       ))}

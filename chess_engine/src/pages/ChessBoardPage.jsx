@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 import { Chess } from 'chess.js';
 import ChessBoardComponent from '../assets/ChessBoardComponent';
 import Controls from '../assets/Controls';
@@ -48,12 +49,20 @@ function ChessBoardPage() {
   };
 
   return (
+    <motion.div
+    className="p-6"
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -30 }}
+      transition={{ duration: 0.5 }}
+    >
+
     <div className="app-container">
       <div className="chessboard-container">
         <ChessBoardComponent
           position={fenHistory[currentIndex]}
           onDrop={makeAMove}
-        />
+          />
       </div>
       <Controls
         currentIndex={currentIndex}
@@ -61,13 +70,14 @@ function ChessBoardPage() {
         setCurrentIndex={setCurrentIndex}
         onAnalyze={analyze}
         onReset={handleReset}
-      />
+        />
       <div className="controls-container">
-        <EvaluationDisplay fen={fenHistory[currentIndex]} />
+        {/* <EvaluationDisplay fen={fenHistory[currentIndex]} /> */}
         <BestMoveDisplay bestMove={bestMove} />
-        <MoveHistory pgn={getPGN()} />
+        {/* <MoveHistory pgn={getPGN()} /> */}
       </div>
     </div>
+        </motion.div>
   );
 }
 
