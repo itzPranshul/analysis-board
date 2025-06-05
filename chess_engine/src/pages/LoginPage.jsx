@@ -2,7 +2,7 @@ import React from 'react';
 
 const LoginPage = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-tr from-[#1e3a8a] to-[#312e81] px-4">
+    <div className="min-h-screen flex items-center justify-center px-4">
       <div className="bg-white rounded-xl shadow-lg max-w-md w-full p-8 sm:p-10">
         <h2 className="text-3xl font-extrabold text-gray-900 mb-8 text-center">Welcome Back</h2>
         <form className="space-y-6">

@@ -3,9 +3,6 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const stockfishRoutes = require('./routes/stockfishRoutes');
-const communityRoutes = require('./routes/community');
-const userRoutes = require('./routes/userRoutes');
-const profileRoutes = require('./routes/Profile');
 
 const app = express();
 const PORT = 5000;
@@ -24,9 +21,6 @@ app.use(cors());
 app.use(bodyParser.json());
 
 app.use('/api', stockfishRoutes);
-app.use('/api/community', communityRoutes);
-app.use("/users", userRoutes);
-app.use('/api/profiles', profileRoutes);
 
 app.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
