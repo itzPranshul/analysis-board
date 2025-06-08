@@ -1,9 +1,20 @@
-import React, { useState } from 'react';
-import { NavLink, Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { NavLink, Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const location = useLocation();
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token && token.length > 10) {
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
+    }
+  }, [location]);
 
   const navLinks = [
     { to: '/', label: 'Home' },
@@ -31,28 +42,27 @@ const Navbar = () => {
         ))}
       </ul>
 
-      {/* Desktop Login */}
+      {/* Desktop Login/Profile */}
       <div className="hidden md:block">
-  {localStorage.getItem('token') ? (
-    <Link to="/dashboard">
-      <img
-        src="./public/images/blue-circle-with-white-user_78370-4707.jpg.avif" // ✅ Replace with dynamic image URL if available
-        alt="Profile"
-        className="w-10 h-10 rounded-full border-2 border-white object-cover"
-      />
-    </Link>
-  ) : (
-    <Link
-      to="/login"
-      className="bg-blue-600 hover:bg-blue-700 transition px-4 py-2 rounded-lg text-sm font-medium"
-    >
-      Login
-    </Link>
-  )}
-</div>
+        {isLoggedIn ? (
+          <Link to="/dashboard">
+            <img
+              src="./public/images/blue-circle-with-white-user_78370-4707.jpg.avif"
+              alt="Profile"
+              className="w-10 h-10 rounded-full border-2 border-white object-cover"
+            />
+          </Link>
+        ) : (
+          <Link
+            to="/login"
+            className="bg-blue-600 hover:bg-blue-700 transition px-4 py-2 rounded-lg text-sm font-medium"
+          >
+            Login
+          </Link>
+        )}
+      </div>
 
-
-      {/* Mobile Hamburger */}
+      {/* Hamburger */}
       <div className="md:hidden">
         <button
           onClick={() => setMenuOpen(!menuOpen)}
@@ -75,13 +85,23 @@ const Navbar = () => {
               {label}
             </NavLink>
           ))}
-          <Link
-            to="/login"
-            className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded text-sm font-medium transition"
-            onClick={() => setMenuOpen(false)}
-          >
-            Login
-          </Link>
+          {isLoggedIn ? (
+            <Link
+              to="/dashboard"
+              className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded text-sm font-medium transition"
+              onClick={() => setMenuOpen(false)}
+            >
+              Dashboard
+            </Link>
+          ) : (
+            <Link
+              to="/login"
+              className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded text-sm font-medium transition"
+              onClick={() => setMenuOpen(false)}
+            >
+              Login
+            </Link>
+          )}
         </div>
       )}
     </nav>

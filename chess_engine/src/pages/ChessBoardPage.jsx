@@ -73,7 +73,7 @@ function ChessBoardPage() {
         />
       <div className="controls-container">
         {/* <EvaluationDisplay fen={fenHistory[currentIndex]} /> */}
-        <BestMoveDisplay bestMove={bestMove} />
+        <BestMoveDisplay  bestMove={bestMove} />
         {/* <MoveHistory pgn={getPGN()} /> */}
       </div>
     </div>

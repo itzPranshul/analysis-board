@@ -9,6 +9,7 @@ const authRoutes = require("./routes/authRoutes");
 const profileRoutes = require("./routes/profileRoutes");
 const protectedRoute = require("./routes/protectedRoute");
 const post = require("./routes/post");
+const forgetPassword = require('./routes/auth');
 
 
 
@@ -36,6 +37,7 @@ app.use("/api/profile", profileRoutes);
 app.use("/api", protectedRoute);
 app.use("/api",post);
 app.use('/uploads', express.static('uploads'));
+app.use('/api/auth', forgetPassword);
 
 
 app.listen(PORT, () => {

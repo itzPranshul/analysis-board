@@ -97,6 +97,8 @@ const DashboardPage = () => {
         </div>
       )}
 
+    
+
       {/* Posts */}
       {posts.length === 0 ? (
         <p>No posts yet.</p>

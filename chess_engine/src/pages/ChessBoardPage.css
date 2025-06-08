@@ -98,6 +98,10 @@ header {
   margin-top: 0; /* No margin above controls */
 }
 
+.controls-container{
+  color: white;
+}
+
 /* Buttons */
 button {
   background-color: #616161; /* Neutral gray */
