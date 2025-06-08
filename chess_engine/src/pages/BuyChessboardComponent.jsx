@@ -28,7 +28,7 @@ function BuyChessboardComponent() {
           This is a high-quality, standard tournament-size chess mat (20x20 inches) with 2.25-inch squares—perfect for casual play and official events alike. Durable, lightweight, and easy to roll for portability.
         </p>
 
-      <h2 style={{ margin: '1rem 0', fontSize: '1.5rem' }}>Price: ₹499</h2>
+      <h2 className="text-white" style={{ margin: '1rem 0', fontSize: '1.5rem' }}>Price: ₹499</h2>
 
       <button 
         // onClick={handlePayment}

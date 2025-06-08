@@ -9,6 +9,8 @@ import CommunityComponent from './pages/CommunityComponent';
 import HomeComponent from './pages/HomeComponent'; // ✅ Add this new page
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignUpPage';
+import DashboardPage from './pages/DashboardPage';
+import PrivateRoute from './components/PrivateRoute';
 import './App.css';
 
 const AnimatedRoutes = () => {
@@ -23,6 +25,14 @@ const AnimatedRoutes = () => {
         <Route path="/community" element={<CommunityComponent />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/SignUpPage" element={<SignupPage />} />
+        <Route
+          path="/dashboard"
+          element={
+            <PrivateRoute>
+              <DashboardPage />
+            </PrivateRoute>
+          }
+        />
       </Routes>
     </AnimatePresence>
   );

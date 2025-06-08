@@ -33,13 +33,24 @@ const Navbar = () => {
 
       {/* Desktop Login */}
       <div className="hidden md:block">
-        <Link
-          to="/login"
-          className="bg-blue-600 hover:bg-blue-700 transition px-4 py-2 rounded-lg text-sm font-medium"
-        >
-          Login
-        </Link>
-      </div>
+  {localStorage.getItem('token') ? (
+    <Link to="/dashboard">
+      <img
+        src="./public/images/blue-circle-with-white-user_78370-4707.jpg.avif" // ✅ Replace with dynamic image URL if available
+        alt="Profile"
+        className="w-10 h-10 rounded-full border-2 border-white object-cover"
+      />
+    </Link>
+  ) : (
+    <Link
+      to="/login"
+      className="bg-blue-600 hover:bg-blue-700 transition px-4 py-2 rounded-lg text-sm font-medium"
+    >
+      Login
+    </Link>
+  )}
+</div>
+
 
       {/* Mobile Hamburger */}
       <div className="md:hidden">
