@@ -8,39 +8,40 @@ const DashboardPage = () => {
   const [openCommentsForPostId, setOpenCommentsForPostId] = useState(null);
   const [newComments, setNewComments] = useState({}); // To track comment input per post
 
-  useEffect(() => {
-    const fetchProtected = async () => {
-      try {
-        const res = await axios.get("http://localhost:5000/api/protected", {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        });
-        setData(res.data);
-      } catch (err) {
-        console.error(err);
-        setData({ message: "Access denied. Please login.", name: "", email: "" });
-      }
-    };
+useEffect(() => {
+  const fetchProtectedAndPosts = async () => {
+    try {
+      const userRes = await axios.get("http://localhost:5000/api/protected", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
 
-    const fetchPosts = async () => {
-      try {
-        const res = await axios.get("http://localhost:5000/api/posts", {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        });
-        setPosts(res.data);
-      } catch (err) {
-        console.error("Error fetching posts", err);
-      } finally {
-        setLoading(false);
-      }
-    };
+      setData(userRes.data);
 
-    fetchProtected();
-    fetchPosts();
-  }, []);
+      // Now fetch posts and filter
+      const postsRes = await axios.get("http://localhost:5000/api/posts", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+
+      const userPosts = postsRes.data.filter(
+        (post) => post.postedBy?.email === userRes.data.email
+      );
+
+      setPosts(userPosts);
+    } catch (err) {
+      console.error(err);
+      setData({ message: "Access denied. Please login.", name: "", email: "" });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchProtectedAndPosts();
+}, []);
+
 
   const toggleComments = (postId) => {
     setOpenCommentsForPostId((prev) => (prev === postId ? null : postId));
@@ -87,6 +88,25 @@ const DashboardPage = () => {
     return <div className="flex justify-center items-center h-screen">Loading...</div>;
   }
 
+  const deletePost = async (postId) => {
+  if (!window.confirm("Are you sure you want to delete this post?")) return;
+
+  try {
+    await axios.delete(`http://localhost:5000/api/posts/${postId}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+
+    // Remove post from UI
+    setPosts((prevPosts) => prevPosts.filter((post) => post._id !== postId));
+  } catch (err) {
+    console.error("Error deleting post:", err);
+    alert("Failed to delete post");
+  }
+};
+
+
   return (
     <div className="max-w-3xl mx-auto p-4 pt-20 text-white">
       {/* User info */}
@@ -107,7 +127,8 @@ const DashboardPage = () => {
           <div
             key={post._id}
             className="mb-8 p-4 border rounded shadow-sm bg-white"
-          >
+          > 
+
             {/* Post photo */}
             {post.photoUrl && (
               <img
@@ -127,6 +148,16 @@ const DashboardPage = () => {
             >
               {openCommentsForPostId === post._id ? "Hide Comments" : "Show Comments"}
             </button>
+            {/* Show delete only if user is the owner */}
+{post.postedBy?.email === data.email && (
+  <button
+    onClick={() => deletePost(post._id)}
+    className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700 float-right"
+  >
+    Delete
+  </button>
+)}
+
 
             {/* Comments list + new comment input */}
             {openCommentsForPostId === post._id && (
@@ -164,6 +195,16 @@ const DashboardPage = () => {
           </div>
         ))
       )}
+
+      <div className="flex justify-center mt-8">
+  <button
+    onClick={() => window.location.href = "/create-post"} // Adjust if using React Router
+    className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+  >
+    Create New Post
+  </button>
+</div>
+
     </div>
   );
 };
