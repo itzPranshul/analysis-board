@@ -14,6 +14,7 @@ import PrivateRoute from './components/PrivateRoute';
 import ResetPasswordPage from './ResetPasswordPage'; // ✅ Make sure this path is correct
 import './App.css';
 import CreatePostPage from './pages/CreatePostPage';
+import DiscussionPage from "./pages/DiscussionPage";
 
 const AnimatedRoutes = () => {
   const location = useLocation();
@@ -29,6 +30,7 @@ const AnimatedRoutes = () => {
         <Route path="/SignUpPage" element={<SignupPage />} />
         <Route path="/reset-password/:token" element={<ResetPasswordPage />} /> {/* ✅ Moved inside Routes */}
         <Route path="/create-post" element={<CreatePostPage />} />
+        <Route path="/discussion" element={<DiscussionPage />} />
         <Route
           path="/dashboard"
           element={

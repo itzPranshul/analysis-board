@@ -21,20 +21,23 @@ const LoginPage = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const res = await axios.post('http://localhost:5000/api/auth/signin', formData);
-      const { token } = res.data;
+  e.preventDefault();
+  try {
+    const res = await axios.post('http://localhost:5000/api/auth/signin', formData);
 
-      // Save token to localStorage
-      localStorage.setItem('token', token);
+    const { token, user } = res.data;
 
-      alert('Login successful!');
-      navigate('/dashboard');
-    } catch (err) {
-      alert(err.response?.data?.message || 'Login failed.');
-    }
-  };
+    // ✅ Save token and user info to localStorage
+    localStorage.setItem('token', token);
+    localStorage.setItem('user', JSON.stringify(user)); // ⬅️ Store user object
+
+    alert('Login successful!');
+    navigate('/dashboard');
+  } catch (err) {
+    alert(err.response?.data?.message || 'Login failed.');
+  }
+};
+
 
   const handleForgotPasswordSubmit = async (e) => {
     e.preventDefault();
