@@ -1,6 +1,6 @@
 const { spawn } = require('child_process');
 
-const STOCKFISH_PATH = '/Users/pranshul/Desktop/projects/stockfish/Stockfish/src/stockfish';
+const STOCKFISH_PATH = './stockfish/Stockfish/src/stockfish';
 
 exports.analyzePosition = (req, res) => {
   const fen = req.body.fen;
