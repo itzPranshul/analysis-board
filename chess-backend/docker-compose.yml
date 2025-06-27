@@ -1,0 +1,35 @@
+version: "3.8"
+
+services:
+  mongo:
+    image: mongo:6
+    ports:
+      - "27018:27017"   # Maps host port 27018 to container port 27017
+    volumes:
+      - mongo-data:/data/db
+
+  backend:
+    build: .
+    ports:
+      - "5000:5000"
+    environment:
+      MONGO_URI: mongodb://mongo:27017/chess-community
+      NODE_ENV: production
+      JWT_SECRET: someVerySecretKey123!@#
+    depends_on:
+      - mongo
+
+  mongo-express:
+    image: mongo-express
+    ports:
+      - "8081:8081"   # Mongo Express UI at localhost:8081
+    environment:
+      ME_CONFIG_MONGODB_SERVER: mongo
+      ME_CONFIG_MONGODB_PORT: 27017
+      ME_CONFIG_BASICAUTH_USERNAME: admin
+      ME_CONFIG_BASICAUTH_PASSWORD: secret123
+    depends_on:
+      - mongo
+
+volumes:
+  mongo-data:

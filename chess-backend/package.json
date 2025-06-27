@@ -1,13 +1,13 @@
 {
   "name": "chess-backend",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "This is the backend for the chess community app.",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "pranshul gupta",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^3.0.2",
@@ -22,5 +22,9 @@
     "multer": "^1.4.5-lts.2",
     "nodemailer": "^7.0.3",
     "socket.io": "^4.8.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.29.0",
+    "globals": "^16.2.0"
   }
 }
