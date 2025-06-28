@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion as Motion } from 'framer-motion';
 import { Chess } from 'chess.js';
 import ChessBoardComponent from '../assets/ChessBoardComponent';
 import Controls from '../assets/Controls';
 import BestMoveDisplay from '../assets/BestMoveDisplay';
-import MoveHistory from '../assets/MoveHistory';
+// import MoveHistory from '../assets/MoveHistory'; // Removed because it's not used
 import EvaluationDisplay from '../assets/EvaluationDisplay';
 import './ChessBoardPage.css'; // optional CSS specific to this page
 
 function ChessBoardPage() {
-  const [game, setGame] = useState(new Chess());
   const [fenHistory, setFenHistory] = useState([new Chess().fen()]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [bestMove, setBestMove] = useState('');
@@ -23,7 +22,6 @@ function ChessBoardPage() {
 
       setFenHistory(updatedHistory);
       setCurrentIndex(updatedHistory.length - 1);
-      setGame(newGame);
     }
   };
 
@@ -37,47 +35,43 @@ function ChessBoardPage() {
     setBestMove(data.best_line);
   };
 
-  const getPGN = () => {
-    return game.pgn().replace(/\[.*?\]\s*\n/g, '').trim();
-  };
-
   const handleReset = () => {
     const initialFen = new Chess().fen();
     setFenHistory([initialFen]);
     setCurrentIndex(0);
-    setGame(new Chess());
   };
 
   return (
-    <motion.div
-    className="p-6"
+    <Motion.div
+      className="p-6"
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -30 }}
       transition={{ duration: 0.5 }}
     >
-
-    <div className="app-container">
-      <div className="chessboard-container">
-        <ChessBoardComponent
-          position={fenHistory[currentIndex]}
-          onDrop={makeAMove}
+      <div className="app-container">
+        <div className="chessboard-container">
+          <ChessBoardComponent
+            position={fenHistory[currentIndex]}
+            onDrop={makeAMove}
           />
-      </div>
-      <Controls
-        currentIndex={currentIndex}
-        historyLength={fenHistory.length}
-        setCurrentIndex={setCurrentIndex}
-        onAnalyze={analyze}
-        onReset={handleReset}
+        </div>
+
+        <Controls
+          currentIndex={currentIndex}
+          historyLength={fenHistory.length}
+          setCurrentIndex={setCurrentIndex}
+          onAnalyze={analyze}
+          onReset={handleReset}
         />
-      <div className="controls-container">
-        {/* <EvaluationDisplay fen={fenHistory[currentIndex]} /> */}
-        <BestMoveDisplay  bestMove={bestMove} />
-        {/* <MoveHistory pgn={getPGN()} /> */}
+
+        <div className="controls-container">
+          {/* <EvaluationDisplay fen={fenHistory[currentIndex]} /> */}
+          <BestMoveDisplay bestMove={bestMove} />
+          {/* <MoveHistory pgn={getPGN()} /> */}
+        </div>
       </div>
-    </div>
-        </motion.div>
+    </Motion.div>
   );
 }
 

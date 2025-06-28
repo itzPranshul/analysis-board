@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { motion } from "framer-motion";
+import { motion as Motion } from "framer-motion"; // Renamed for ESLint compliance
 
 const HomeComponent = () => {
   const [posts, setPosts] = useState([]);
@@ -72,7 +72,7 @@ const HomeComponent = () => {
   }
 
   return (
-    <motion.div
+    <Motion.div
       className="max-w-3xl mx-auto p-4 pt-20"
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
@@ -103,7 +103,7 @@ const HomeComponent = () => {
 
             <button
               onClick={() => toggleComments(post._id)}
-              className="text-blue-600  mb-2"
+              className="text-blue-600 mb-2"
             >
               {openCommentsForPostId === post._id ? "Hide Comments" : "Show Comments"}
             </button>
@@ -143,7 +143,7 @@ const HomeComponent = () => {
           </div>
         ))
       )}
-    </motion.div>
+    </Motion.div>
   );
 };
 
