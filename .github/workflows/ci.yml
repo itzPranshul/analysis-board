@@ -1,0 +1,50 @@
+name: Chess Platform CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  frontend:
+    name: Frontend - Lint & Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install dependencies (frontend)
+        working-directory: chess_engine
+        run: npm install
+
+      - name: Lint (frontend)
+        working-directory: chess_engine
+        run: npm run lint
+
+      - name: Build (frontend)
+        working-directory: chess_engine
+        run: npm run build
+
+  backend:
+    name: Backend - Install Only
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install dependencies (backend)
+        working-directory: chess-backend
+        run: npm install
